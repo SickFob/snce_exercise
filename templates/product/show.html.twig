@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <h1 class="text-center">Product</h1>
+            <hr>
+            <a class="btn btn-primary" href="{{ path('product_index') }}"><i class="fas fa-arrow-left"></i> back to list</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="{{ asset('uploads/products-images/' ~ product.imagePath) }}" alt="Card image cap" class="img-fluid" height="300">
+                <div class="card-block">
+                    <h4 class="card-title">{{ product.name }}</h4>
+                    <p class="card-text">
+                        {{ product.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{{ form_start(form) }}
+    {{ form_row(form._token) }}
+    <div class="form-group">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.tags) }}
+        {{ form_widget(form.tags, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    {% if product.imagePath is null %}
+        <div class="form-group">        
+            {{ form_label(form.image_path) }}
+            {{ form_widget(form.image_path, {'attr': {'class': 'form-control-file'}}) }}
+        </div>
+    {% else %}
+        <div id="current-image-block" class="form-group"> 
+            <img src="{{ asset('uploads/products-images/' ~ product.imagePath) }}" height="250" width="300"/>
+            <a id="change-img-btn" class="btn btn-warning">Change image</a> 
+        </div>
+    {% endif %}    
+    <button class="btn btn-primary mt-2" name="form_name[submit]">{{ button_label|default('Save') }}</button>
+{{ form_end(form, {'render_rest': false}) }}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/updateImage.js') }}"></script>
+{% endblock %}

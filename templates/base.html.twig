@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        
+        {% block stylesheets %}
+            <link href="{{ asset('assets/lib/bootstrap-4/css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('assets/lib/fontawesome/css/all.css') }}" rel="stylesheet">
+            <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
+        {% block javascripts %}
+            <script src="{{ asset('assets/lib/jquery3.3.1.js') }}"></script>
+            <script src="{{ asset('assets/lib/bootstrap-4/js/bootstrap.min.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>
