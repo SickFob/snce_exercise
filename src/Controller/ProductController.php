@@ -37,7 +37,7 @@ class ProductController extends Controller
     /**
      * @Route("/create", name="product_new", methods="GET|POST")
      */
-    public function new(Request $request, FileUploader $fileUploader): Response
+    public function new(Request $request, FileUploader $fileUploader, TagRepository $tagRepository): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
@@ -59,6 +59,7 @@ class ProductController extends Controller
         return $this->render('product/new.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
+            'tags' => $tagRepository->findAll()
         ]);
     }
 
@@ -77,7 +78,7 @@ class ProductController extends Controller
     /**
      * @Route("/{id}/edit", name="product_edit", methods="GET|PATCH")
      */
-    public function edit(Request $request, Product $product, FileUploader $fileUploader): Response
+    public function edit(Request $request, Product $product, FileUploader $fileUploader, TagRepository $tagRepository): Response
     {   
         $session = new Session();
         if($request->isMethod('GET')) {            
@@ -101,12 +102,16 @@ class ProductController extends Controller
             $product->setImagePath($fileName);           
             $em = $this->getDoctrine()->getManager();
             $em->flush();
-            return $this->redirectToRoute('product_edit', ['id' => $product->getId()]);
+            return $this->redirectToRoute('product_edit', [
+                'id' => $product->getId(),
+                'tags' => $tagRepository->findAll()
+            ]);
         }
         
         return $this->render('product/edit.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
+            'tags' => $tagRepository->findAll()
         ]);
     }
 

@@ -61,11 +61,11 @@ class ProductType extends AbstractType
                     foreach ($tagsAsArray as $key => $value) {
                         array_push($listOfTags, $value);
                     }
-                    return implode(', ', $listOfTags);
+                    return implode(',', $listOfTags);
                 },
                 function ($tagsAsString) {
                     $product = new Product();
-                    foreach (explode(', ', $tagsAsString) as $key => $value) {
+                    foreach (explode(',', $tagsAsString) as $key => $value) {
                         $tag = new Tag();
                         $existentTag = $this->om
                             ->getRepository(Tag::class)

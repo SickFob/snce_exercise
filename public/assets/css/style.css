@@ -4,14 +4,14 @@
   margin-bottom: 10px; /* Added */
 }
 
-button {
+button,
+.badge-tag {
   cursor: pointer;
 }
 
 .align-form {
   display: inline;
 }
-
 
 
 

@@ -12,7 +12,17 @@
 
     <div class="form-group">
         {{ form_label(form.tags) }}
-        {{ form_widget(form.tags, {'attr': {'class': 'form-control'}}) }}
+        <ul class="list-inline">
+            {% for tag in tags %}
+                <li class="list-inline-item"><span class="badge badge-info badge-tag">{{ tag.name}} <i class="fas fa-plus"></i></span></li>
+            {% endfor %}
+        </ul>
+        {{ form_widget(form.tags, {
+            'attr': {
+                'class': 'form-control',
+                'data-role': 'tagsinput'
+            }
+        }) }}
     </div>
 
     {% if product.imagePath is null %}
@@ -27,8 +37,11 @@
         </div>
     {% endif %}    
     <button class="btn btn-primary mt-2" name="form_name[submit]">{{ button_label|default('Save') }}</button>
+
 {{ form_end(form, {'render_rest': false}) }}
 
 {% block javascripts %}
-    <script src="{{ asset('assets/js/updateImage.js') }}"></script>
+    {% if app.request.attributes.get('_route') == 'product_edit' %}
+        <script src="{{ asset('assets/js/updateImage.js') }}"></script>
+    {% endif %}
 {% endblock %}
