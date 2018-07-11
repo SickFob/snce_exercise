@@ -14,7 +14,7 @@
         {{ form_label(form.tags) }}
         <ul class="list-inline">
             {% for tag in tags %}
-                <li class="list-inline-item"><span class="badge badge-info badge-tag">{{ tag.name}} <i class="fas fa-plus"></i></span></li>
+                <li class="list-inline-item badge-tag"><span class="badge badge-info">{{ tag.name}}</span> <span class="badge badge-success"><i class="fas fa-plus"></i></span></li>
             {% endfor %}
         </ul>
         {{ form_widget(form.tags, {
