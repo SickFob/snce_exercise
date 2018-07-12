@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-use App\Service\FileUploader;
+use App\Service\FileUploaderService;
 
 /**
  * @Route("/product")
@@ -25,11 +25,11 @@ class ProductController extends Controller
     /**
      * @Route("/list", name="product_index", methods="GET")
      */
-    public function index(ProductRepository $productRepository, TagRepository $tagRepository): Response
+    public function index(ProductRepository $productRepository): Response
     {
         return $this->render('product/index.html.twig', [
             'products' => $productRepository->findAll(),
-            'tags' => $tagRepository->findAll()
+            'products' => $productRepository->findBy(array(), array('createdAt' => 'DESC')),
             ]
         );
     }
@@ -37,7 +37,7 @@ class ProductController extends Controller
     /**
      * @Route("/create", name="product_new", methods="GET|POST")
      */
-    public function new(Request $request, FileUploader $fileUploader, TagRepository $tagRepository): Response
+    public function new(Request $request, FileUploaderService $fileUploader, TagRepository $tagRepository): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
@@ -45,7 +45,9 @@ class ProductController extends Controller
         
         if ($form->isSubmitted() && $form->isValid()) {
             if($form->get('image_path')->getData() != null) {
+                // retrieve file
                 $file = $form->get('image_path')->getData();
+                // upload service
                 $fileName = $fileUploader->upload($file);
                 $product->setImagePath($fileName);
             }
@@ -78,7 +80,7 @@ class ProductController extends Controller
     /**
      * @Route("/{id}/edit", name="product_edit", methods="GET|PATCH")
      */
-    public function edit(Request $request, Product $product, FileUploader $fileUploader, TagRepository $tagRepository): Response
+    public function edit(Request $request, Product $product, FileUploaderService $fileUploader, TagRepository $tagRepository): Response
     {   
         $session = new Session();
         if($request->isMethod('GET')) {            
@@ -118,7 +120,7 @@ class ProductController extends Controller
     /**
      * @Route("/{id}", name="product_delete", methods="DELETE")
      */
-    public function delete(Request $request, Product $product, FileUploader $fileUploader): Response
+    public function delete(Request $request, Product $product, FileUploaderService $fileUploader): Response
     {
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();

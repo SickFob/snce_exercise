@@ -43,7 +43,11 @@ class ProductType extends AbstractType
                 'required' => true,
             ])
             ->add('description', TextareaType::class, [
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'rows' => '6', 
+                    'cols' => '50'
+                ]
             ])
             ->add('image_path', FileType::class, [
                 'label' => 'Image',

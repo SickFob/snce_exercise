@@ -5,7 +5,7 @@ namespace App\Service;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Entity\Product;
 
-class FileUploader
+class FileUploaderService
 {
     private $targetDirectory;
 

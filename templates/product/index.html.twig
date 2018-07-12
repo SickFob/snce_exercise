@@ -11,33 +11,25 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-3 mt-5">
+        <div class="col">
             <div class="row">
                 <div class="col">
-                    <h2>Tags</h2>
-                    <ul>
-                        {% for tag in tags %}
-                            <li>
-                                <div class="form-check">
-                                    <input class="form-check-input tag-filter" type="checkbox" name="tagFilter" id="{{tag.id}}" value="{{tag.id}}">
-                                    <label class="form-check-label" for="defaultCheck1">
-                                        {{ tag.name }}
-                                    </label>
-                                </div>
-                            </li>
-                        {% endfor %}
+                    <a href="{{ path('product_new') }}" class="mb-5 btn btn-primary">Add new product</a>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="search-filter" placeholder="Search tags...">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col">
-            <a href="{{ path('product_new') }}" class="mb-5 btn btn-primary">Add new product</a>
+            
             <table class="table">
                 <thead>
                     <tr>
                         <th>Image</th>
                         <th>Name</th>
-                        <th>Description</th>
-                        <th>tags</th>
+                        <th>Tags</th>
+                        <th>Published</th>
                         <th>actions</th>
                     </tr>
                 </thead>
@@ -46,21 +38,23 @@
                     <tr class="product">
                         <td>
                             {% if product.imagePath %}
-                                <img src="{{ asset('uploads/products-images/' ~ product.imagePath) }}" height="70" width="90"></img>
+                                <a href="{{ path('product_edit', {'id': product.id}) }}" title="Edit">
+                                    <img src="{{ asset('uploads/products-images/' ~ product.imagePath) }}" height="100" width="90"></img>
+                                </a>
                             {% else %}
                                 <img src="{{ asset('assets/img/no-image-placeholder.png') }}" height="70" width="90"></img>
                             {% endif %}
                         </td>    
                         <td>{{ product.name }}</td>
-                        <td>{{ product.description|truncate(150, true) }}</td>
                         <td>
                             {% for tag in product.tags %}
                                 <span id="{{tag.id}}" class="badge badge-info">{{tag.name}}</span>
                             {% endfor %}
                         </td>
-                        <td>
-                            <a class="btn btn-info" href="{{ path('product_show', {'id': product.id}) }}" title="Show"><i class="fas fa-eye"></i></a>
-                            <a class="btn btn-warning" href="{{ path('product_edit', {'id': product.id}) }}" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                        <td>{{ product.createdAt|date('d-m-Y') }}</td>
+                        <td class="text-center">
+                            <a class="btn btn-info btn-action" href="{{ path('product_show', {'id': product.id}) }}" title="Show"><i class="fas fa-eye"></i></a>
+                            <a class="btn btn-warning btn-action" href="{{ path('product_edit', {'id': product.id}) }}" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                             {{ include('product/_delete_form.html.twig') }}
                         </td>
                     </tr>
