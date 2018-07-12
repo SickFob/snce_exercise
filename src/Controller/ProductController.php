@@ -54,7 +54,6 @@ class ProductController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
-
             return $this->redirectToRoute('product_index');
         }
 
@@ -134,6 +133,9 @@ class ProductController extends Controller
         return $this->redirectToRoute('product_index');
     }
 
+    /**
+     * Return true if current product image is changed
+     */
     private function checkIfImageChanged($oldImage, $newImage)
     {
         if( $oldImage != $newImage && $oldImage != null) {

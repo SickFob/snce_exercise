@@ -18,29 +18,6 @@ USE `snce_exercise`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `migration_versions`
---
-
-DROP TABLE IF EXISTS `migration_versions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `migration_versions` (
-  `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `migration_versions`
---
-
-LOCK TABLES `migration_versions` WRITE;
-/*!40000 ALTER TABLE `migration_versions` DISABLE KEYS */;
-INSERT INTO `migration_versions` VALUES ('20180707123449'),('20180707123747'),('20180707124052'),('20180707124736'),('20180707125439'),('20180707163457');
-/*!40000 ALTER TABLE `migration_versions` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `product`
 --
 
@@ -51,9 +28,11 @@ CREATE TABLE `product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8mb4_unicode_ci,
-  `image_path` longtext COLLATE utf8mb4_unicode_ci,
+  `image_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +41,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (27,'Kill Bill vol. 1','Kill Bill: Volume 1 is a 2003 American martial arts film written and directed by Quentin Tarantino. It stars Uma Thurman as the Bride, who swears revenge on a team of assassins and their leader Bill after they try to kill her and her unborn child. Her journey takes her to Japan, where she battles the Tokyo yakuza.','95574176d7f819ddfe126d9e60d4f989.jpeg'),(28,'Kill Bill vol. 2','Kill Bill: Volume 2 is a 2004 American martial arts film written and directed by Quentin Tarantino. It stars Uma Thurman as the Bride, who continues her campaign of revenge against the Deadly Viper Assassination Squad and their leader Bill, who tried to kill her and her unborn child.','55245ff4ab0afc366b2d896f12037ee0.jpeg'),(29,'Guardians of the Galaxy Vol. 2','Guardians of the Galaxy Vol. 2 is a 2017 American superhero film based on the Marvel Comics superhero team Guardians of the Galaxy, produced by Marvel Studios and distributed by Walt Disney Studios Motion Pictures. It is the sequel to 2014\'s Guardians of the Galaxy and the fifteenth film in the Marvel Cinematic Universe.','73a56fca913a07195b908dbace88ce0e.jpeg');
+INSERT INTO `product` VALUES (1,'Kill Bill vol. 1','Kill Bill: Volume 1 is a 2003 American martial arts film written and directed by Quentin Tarantino. It stars Uma Thurman as the Bride, who swears revenge on a team of assassins and their leader Bill after they try to kill her and her unborn child. Her journey takes her to Japan, where she battles the Tokyo yakuza.','db68855f3efe4cd26e8daec5dbf03e9a.jpeg','2018-07-12 20:40:42','2018-07-12 20:40:42'),(2,'Kill Bill vol. 2','Kill Bill: Volume 2 is a 2004 American martial arts film written and directed by Quentin Tarantino. It stars Uma Thurman as the Bride, who continues her campaign of revenge against the Deadly Viper Assassination Squad and their leader Bill, who tried to kill her and her unborn child.','877e2142cf9e1593b7ea81e0952431b9.jpeg','2018-07-12 20:41:15','2018-07-12 20:41:15'),(3,'The Great Dictator','The Great Dictator is a 1940 American political satire comedy-drama film written, directed, produced, scored by and starring British comedian Charlie Chaplin, following the tradition of many of his other films','6cc4070b4574d83ed54fcf9cba1605d4.jpeg','2018-07-12 20:43:33','2018-07-12 20:43:33');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +69,7 @@ CREATE TABLE `product_tag` (
 
 LOCK TABLES `product_tag` WRITE;
 /*!40000 ALTER TABLE `product_tag` DISABLE KEYS */;
-INSERT INTO `product_tag` VALUES (27,16),(27,17),(27,18),(28,16),(28,17),(28,18),(29,20),(29,21),(29,22),(29,23);
+INSERT INTO `product_tag` VALUES (1,1),(1,2),(1,3),(2,1),(2,2),(2,3),(3,4),(3,5),(3,6);
 /*!40000 ALTER TABLE `product_tag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,7 +84,7 @@ CREATE TABLE `tag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,7 +93,7 @@ CREATE TABLE `tag` (
 
 LOCK TABLES `tag` WRITE;
 /*!40000 ALTER TABLE `tag` DISABLE KEYS */;
-INSERT INTO `tag` VALUES (16,'Quentin Tarantino'),(17,'Lawrence Bender'),(18,'Uma Thurman'),(20,'James Gunn'),(21,'Kevin Feige'),(22,'Chris Pratt'),(23,'Zoe Saldana');
+INSERT INTO `tag` VALUES (1,'Quentin Tarantino'),(2,'Lawrence Bender'),(3,'Uma Thurman'),(4,'Charlie Chaplin'),(5,'Paulette Goddard'),(6,'Jack Oakie');
 /*!40000 ALTER TABLE `tag` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -127,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-11  0:21:21
+-- Dump completed on 2018-07-12 20:44:33
