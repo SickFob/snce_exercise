@@ -134,7 +134,9 @@ class ProductController extends Controller
     }
 
     /**
-     * Return true if current product image is changed
+     * Description: Return true if current product image is changed
+     * @param $oldImage - current product related image
+     * @param $newImage - new product's image
      */
     private function checkIfImageChanged($oldImage, $newImage)
     {
